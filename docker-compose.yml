@@ -1,0 +1,25 @@
+---
+version: "3.8"
+
+services:
+ mydb:
+  image: mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: depl
+  container_name: mydhb
+
+ apache:
+  image: httpd
+  ports:
+   - 8989:80
+  container_name: apache
+  links:
+   - mydb:mysql
+
+ php:
+  image: php:7.2-apache
+  container_name: php
+  links:
+   - mydb:mysql
+   - apache:httpd
+...
